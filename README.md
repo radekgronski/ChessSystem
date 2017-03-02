@@ -1,2 +1,4 @@
-#Projekt na Bazy Danych
-Aplikacja rejestrująca rogrywki szachowe.
+Projekt na Bazy Danych
+======================
+
+Aplikacja do rejestracji rozgrywek szachowych.
