@@ -254,6 +254,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\united.bootstrap.min.css" />
     <Content Include="DatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
@@ -280,6 +281,16 @@
     <Content Include="DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\Lato\Lato-Black.ttf" />
+    <Content Include="fonts\Lato\Lato-BlackItalic.ttf" />
+    <Content Include="fonts\Lato\Lato-Bold.ttf" />
+    <Content Include="fonts\Lato\Lato-BoldItalic.ttf" />
+    <Content Include="fonts\Lato\Lato-Hairline.ttf" />
+    <Content Include="fonts\Lato\Lato-HairlineItalic.ttf" />
+    <Content Include="fonts\Lato\Lato-Italic.ttf" />
+    <Content Include="fonts\Lato\Lato-Light.ttf" />
+    <Content Include="fonts\Lato\Lato-LightItalic.ttf" />
+    <Content Include="fonts\Lato\Lato-Regular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -311,7 +322,6 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />

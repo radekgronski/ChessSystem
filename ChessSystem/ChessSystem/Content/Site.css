@@ -1,1 +1,22 @@
-﻿
+﻿@font-face
+{
+    font-family: Lato;
+    src: url('../fonts/Lato/Lato-Regular.ttf');
+}
+
+html, body
+{
+    font-family: Ubuntu, Lato;
+}
+
+.login-container {
+    margin-top: 100px;
+}
+
+.login-form, .login-form label {
+    margin-top: 20px;
+}
+
+.btn-login {
+    margin-top: 40px;
+}
