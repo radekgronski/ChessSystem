@@ -1,0 +1,42 @@
+﻿@model ChessSystem.Users
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    <fieldset>
+        <legend>Login into application</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+        <table>
+            <tr>
+                <td>@Html.LabelFor(user => user.Login)</td>
+                <td>@Html.TextBoxFor(user => user.Login)</td>
+                <td>@Html.ValidationMessageFor(user => user.Login)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(user => user.Password)</td>
+                <td>@Html.PasswordFor(user => user.Password)</td>
+                <td>@Html.ValidationMessageFor(user => user.Password)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Login" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>
+}

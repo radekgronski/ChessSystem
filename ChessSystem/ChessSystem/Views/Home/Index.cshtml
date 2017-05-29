@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@Html.Partial("_Navbar")
+@Html.ActionLink("Chess System", "Index", "Home", new { area = "" }, new { @class = "site_title" })
+
+<h1>Home page</h1>
+
+<fieldset>
+    <legend>Dashboard</legend>
+
+    @if (Session["Name"] != null) {
+        <text>
+            Welcome @Session["Name"].ToString()
+        </text>
+    }
+</fieldset>  
