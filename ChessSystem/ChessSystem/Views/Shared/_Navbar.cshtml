@@ -1,1 +1,58 @@
-﻿<h1>Navbar</h1>
+﻿@{ 
+    bool isUserLoggedIn = (Session["UserId"] != null);
+    string navbarDropdownTitle = isUserLoggedIn ? Session["Name"].ToString() : "Account";
+
+    string urlSegment = "";
+
+    if (Request.Url.Segments.Length == 1)
+    {
+        urlSegment = "Home";
+    }
+    else
+    {
+        urlSegment = Request.Url.Segments[1];
+        urlSegment = urlSegment.Remove(urlSegment.Length - 1);
+    }
+}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink(Membership.ApplicationName, "Index", "Home", new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="@(urlSegment == "Home" ? "active" : "")">
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li class="@(urlSegment == "Tournaments" ? "active" : "")">
+                @Html.ActionLink("Tournaments", "Index", "Tournaments")
+            </li>
+            <li class="@(urlSegment == "Games" ? "active" : "")">
+                @Html.ActionLink("Games", "Index", "Games")
+            </li>
+            <li class="@(urlSegment == "Players" ? "active" : "")">
+                @Html.ActionLink("Players", "Index", "Players")
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    @navbarDropdownTitle <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    @if (isUserLoggedIn)
+                    {
+                        <li>@Html.ActionLink("User account settings", "Index", "User")</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                        <li>@Html.ActionLink("Create account", "CreateAccount", "User")</li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
