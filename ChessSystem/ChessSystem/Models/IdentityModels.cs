@@ -29,5 +29,7 @@ namespace ChessSystem.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Tournaments> Tournaments { get; set; }
     }
 }

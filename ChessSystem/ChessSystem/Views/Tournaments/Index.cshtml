@@ -1,0 +1,12 @@
+﻿@model ChessSystem.Models.Tournaments[]
+
+@Html.Partial("_Navbar")
+
+<h1>Tournaments</h1>
+
+<ul>
+    @foreach (var tournament in Model)
+    {
+        <li>@tournament.Name</li>
+    }
+</ul>
