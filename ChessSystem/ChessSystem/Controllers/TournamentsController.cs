@@ -8,10 +8,10 @@ namespace ChessSystem.Controllers
 {
     public class TournamentsController : Controller
     {
+        private ChessSystemDbEntities db = new ChessSystemDbEntities();
+
         public ActionResult Index()
         {
-            var db = new ChessSystemDbEntities();
-
             // select public tournaments
             var tournaments = db.Tournaments.Where(
                 tournament => tournament.IsPublic.HasValue && tournament.IsPublic.Value == true
@@ -33,6 +33,28 @@ namespace ChessSystem.Controllers
             }
 
             return View(tournaments.ToArray());
+        }
+
+        public ActionResult Tournament(int id)
+        {
+            var tournament = db.Tournaments.Where(t => t.Id == id).First();
+
+            if (!tournament.IsPublic.HasValue && tournament.IsPublic.Value == false)
+            {
+                if (Session["UserId"] == null)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                int userId = int.Parse(Session["UserId"].ToString());
+
+                if (tournament.OrganizerId != userId)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+            }
+
+            return View(tournament);
         }
     }
 }

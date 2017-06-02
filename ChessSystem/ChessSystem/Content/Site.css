@@ -9,6 +9,21 @@ html, body
     font-family: Ubuntu, Lato;
 }
 
+
+.bold {
+    font-weight: bold;
+}
+
+
+.header-margin {
+    margin-bottom: 35px;
+}
+
+.section-margin {
+    margin-top: 20px;
+}
+
+
 .login-container {
     margin-top: 50px;
 }

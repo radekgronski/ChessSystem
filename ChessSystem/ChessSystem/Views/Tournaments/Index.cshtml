@@ -2,11 +2,36 @@
 
 @Html.Partial("_Navbar")
 
-<h1>Tournaments</h1>
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">Tournaments</h1>
 
-<ul>
-    @foreach (var tournament in Model)
-    {
-        <li>@tournament.Name</li>
-    }
-</ul>
+    <table class="table table-striped ">
+        <thead>
+            <tr class="bold">
+                <td>Name</td>
+                <td>Date</td>
+                <td>Place</td>
+                <td>Organizer</td>
+                <td>Finished</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tournament in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(tournament.Name, "Tournament", "Tournaments", new { id = tournament.Id }, null)</td>
+                    <td>@(tournament.Date.HasValue ? tournament.Date.Value.ToString() : "-")</td>
+                    <td>@tournament.Place</td>
+                    <td>@tournament.Users.Name</td>
+                    <td>
+                        @(
+                            (!tournament.IsFinished.HasValue || (tournament.IsFinished.HasValue && tournament.IsFinished.Value == false))
+                            ? "No"
+                            : "Yes"
+                        )
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

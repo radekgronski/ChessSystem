@@ -1,0 +1,77 @@
+﻿@model ChessSystem.Models.Tournaments
+
+@{
+    var players = ChessSystem.Models.TournamentsHelper.GetTournamentPlayers(Model);
+}
+
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">@Model.Name</h1>
+    <div class="col-md-6 row">
+        <table class="table table-bordered">
+            <tr>
+                <td class="bold col-md-4">Organizer</td>
+                <td class="col-md-8">
+                    @Model.Users.Name
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Date</td>
+                <td class="col-md-8">
+                    @(Model.Date.HasValue ? Model.Date.Value.ToString() : "-")
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Place</td>
+                <td class="col-md-8">
+                    @Model.Place
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Place</td>
+                <td class="col-md-8">
+                    @Model.Place
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Finished</td>
+                <td class="col-md-8">
+                    @((!Model.IsFinished.HasValue || (Model.IsFinished.HasValue && Model.IsFinished.Value == false)) ? "No" : "Yes")
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Public</td>
+                <td class="col-md-8">
+                    @((!Model.IsPublic.HasValue || (Model.IsPublic.HasValue && Model.IsPublic.Value == false)) ? "No" : "Yes")
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1 section-margin">
+    <h3 class="header-margin">Players</h3>
+    <table class="table table-striped">
+        <thead class="bold">
+            <tr>
+                <td>No.</td>
+                <td>First name</td>
+                <td>Last Name</td>
+                <td>Tagname</td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < players.Length; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@players[i].FirstName</td>
+                    <td>@players[i].LastName</td>
+                    <td>@Html.ActionLink(players[i].Tagname, "Player", "Players", new { id = players[i].Id.ToString() }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
