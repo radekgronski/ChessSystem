@@ -5,14 +5,19 @@
 <div class="col-md-10 col-md-offset-1">
     <h1 class="header-margin">Tournaments</h1>
 
-    <table class="table table-striped ">
+    <table
+        class="table table-striped"
+        data-toggle="table"
+        data-sort-name="date"
+        data-sort-order="desc"
+    >
         <thead>
             <tr class="bold">
-                <td>Name</td>
-                <td>Date</td>
-                <td>Place</td>
-                <td>Organizer</td>
-                <td>Finished</td>
+                <th data-field="name" data-sortable="true">Name</th>
+                <th data-field="date" data-sortable="true">Date</th>
+                <th data-field="place" data-sortable="true">Place</th>
+                <th data-field="organizer" data-sortable="true">Organizer</th>
+                <th data-field="finished" data-sortable="true">Finished</th>
             </tr>
         </thead>
         <tbody>

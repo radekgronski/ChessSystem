@@ -23,6 +23,10 @@ html, body
     margin-top: 20px;
 }
 
+.section-margin-bottom {
+    margin-bottom: 50px;
+}
+
 
 .login-container {
     margin-top: 50px;

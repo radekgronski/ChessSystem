@@ -2,6 +2,7 @@
 
 @{
     var players = ChessSystem.Models.TournamentsHelper.GetTournamentPlayers(Model);
+    var games = Model.Games.Where(game => game.TournamentId.HasValue && game.TournamentId.Value == Model.Id).ToArray();
 }
 
 
@@ -26,13 +27,19 @@
             <tr>
                 <td class="bold col-md-4">Place</td>
                 <td class="col-md-8">
-                    @Model.Place
+                    @(Model.Place != null ? Model.Place : "-")
                 </td>
             </tr>
             <tr>
-                <td class="bold col-md-4">Place</td>
+                <td class="bold col-md-4">Players</td>
                 <td class="col-md-8">
-                    @Model.Place
+                    @players.Length
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Registered games</td>
+                <td class="col-md-8">
+                    @games.Length
                 </td>
             </tr>
             <tr>
@@ -53,25 +60,98 @@
 
 <div class="col-md-10 col-md-offset-1 section-margin">
     <h3 class="header-margin">Players</h3>
-    <table class="table table-striped">
+    <table
+        class="table table-striped"
+        data-toggle="table"
+        data-sort-name="place"
+        data-sort-order="asc"
+    >
         <thead class="bold">
             <tr>
-                <td>No.</td>
-                <td>First name</td>
-                <td>Last Name</td>
-                <td>Tagname</td>
+                <th data-field="tagname" data-sortable="true">Tagname</th>
+                <th data-field="name" data-sortable="true">Name</th>
+                <th data-field="place" data-sortable="true">Place</th>
+                <th data-field="games" data-sortable="true">Games</th>
+                <th data-field="won" data-sortable="true">Won</th>
+                <th data-field="lost" data-sortable="true">Lost</th>
+                <th data-field="drawn" data-sortable="true">Drawn</th>
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < players.Length; i++)
+            @foreach (var player in players)
             {
+                int place = ChessSystem.Models.TournamentsHelper.GetPlayersPlace(Model, player);
+                int won = player.Won.HasValue ? player.Won.Value : 0;
+                int lost = player.Lost.HasValue ? player.Lost.Value : 0;
+                int drawn = player.Drawn.HasValue ? player.Drawn.Value : 0;
+
                 <tr>
-                    <td>@(i + 1)</td>
-                    <td>@players[i].FirstName</td>
-                    <td>@players[i].LastName</td>
-                    <td>@Html.ActionLink(players[i].Tagname, "Player", "Players", new { id = players[i].Id.ToString() }, null)</td>
+                    <td>@Html.ActionLink(player.Tagname, "Player", "Players", new { id = player.Id }, null)</td>
+                    <td>@($"{player.FirstName} {player.LastName}")</td>
+                    <td>@(place != 0 ? place.ToString() : "-")</td>
+                    <td>@(won + lost + drawn)</td>
+                    <td>@won</td>
+                    <td>@lost</td>
+                    <td>@drawn</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<div class="col-md-10 col-md-offset-1 section-margin section-margin-bottom">
+    <h3 class="header-margin">Games</h3>
+    <table
+        class="table table-striped"
+        data-toggle="table"
+        data-sort-name="date"
+        data-sort-order="asc"
+    >
+        <thead class="bold">
+            <tr>
+                <th data-field="player1" data-sortable="true">Player 1</th>
+                <th data-field="player2" data-sortable="true">Player 2</th>
+                <th data-field="winner" data-sortable="true">Winner</th>
+                <th data-field="date" data-sortable="true">Date</th>
+                <th data-field="duration" data-sortable="true">Duration</th>
+                <th data-field="moves" data-sortable="true">Moves</th>
+                <th data-field="finished" data-sortable="true">Finished</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in games)
+            {
+                var isGameFinished = game.IsFinished.HasValue && game.IsFinished.Value == true;
+                var winnerExists = game.WinnerId.HasValue;
+                var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(game);
+                var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(game);
+                var winner = ChessSystem.Models.GamesHelper.GetWinner(game);
+
+                <tr>
+                    <td>@Html.ActionLink(player1.Tagname, "Player", "Players", new { id = player1.Id }, null)</td>
+                    <td>@Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)</td>
+                    <td>
+                        @(
+                            isGameFinished ?
+                                winnerExists ? winner.Tagname : "drawn"
+                            : "-"
+                        )
+                    </td>
+                    <td>@(game.Date.HasValue ? game.Date.Value.ToString() : "-")</td>
+                    <td>
+                        @(
+                            game.Duration.HasValue ?
+                                TimeSpan.FromSeconds(game.Duration.Value).ToString(@"hh\:mm\:ss")
+                            : "-"
+                        )
+                    </td>
+                    <td>@(game.Moves.HasValue ? game.Moves.Value : 0)</td>
+                    <td>@(isGameFinished ? "Yes" : "No")</td>
+                    <td>@Html.ActionLink("Link", "Game", "Games", new { id = game.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

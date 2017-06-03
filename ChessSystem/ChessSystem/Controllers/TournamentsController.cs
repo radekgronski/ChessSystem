@@ -10,6 +10,18 @@ namespace ChessSystem.Controllers
     {
         private ChessSystemDbEntities db = new ChessSystemDbEntities();
 
+        ~TournamentsController()
+        {
+            try
+            {
+                db.Dispose();
+            }
+            finally
+            {
+                base.Dispose();
+            }
+        }
+
         public ActionResult Index()
         {
             // select public tournaments
