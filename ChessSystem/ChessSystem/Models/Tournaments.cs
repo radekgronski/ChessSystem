@@ -36,8 +36,10 @@ namespace ChessSystem.Models
 
         public string Place { get; set; }
 
+        [DisplayName("Is public?")]
         public bool IsPublic { get; set; }
 
+        [DisplayName("Is finished?")]
         public bool IsFinished { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

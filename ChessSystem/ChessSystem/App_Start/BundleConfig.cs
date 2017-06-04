@@ -28,7 +28,7 @@ namespace ChessSystem
                       "~/Content/bootstrap.min.css",
                       "~/Content/united.bootstrap.min.css",
                       "~/Content/bootstrap-table.min.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

@@ -21,9 +21,9 @@
                 @Html.ValidationMessageFor(tournament => tournament.Place)
 
                 @Html.LabelFor(tournament => tournament.IsPublic)
-                @Html.CheckBoxFor(tournament => tournament.IsPublic, new { @class = "checkbox" })
+                @Html.CheckBoxFor(tournament => tournament.IsPublic, new { @class = "checkbox form-checkbox" })
 
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary btn-submit" />
             </div>
         </fieldset>
     }
