@@ -14,45 +14,31 @@
         <table class="table table-bordered">
             <tr>
                 <td class="bold col-md-4">Organizer</td>
-                <td class="col-md-8">
-                    @Model.Users.Name
-                </td>
+                <td class="col-md-8">@Model.Users.Name</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Date</td>
-                <td class="col-md-8">
-                    @(Model.Date.HasValue ? Model.Date.Value.ToString() : "-")
-                </td>
+                <td class="col-md-8">@(Model.Date.HasValue ? Model.Date.Value.ToString() : "-")</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Place</td>
-                <td class="col-md-8">
-                    @(Model.Place != null ? Model.Place : "-")
-                </td>
+                <td class="col-md-8">@(Model.Place != null ? Model.Place : "-")</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Players</td>
-                <td class="col-md-8">
-                    @players.Length
-                </td>
+                <td class="col-md-8">@players.Length</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Registered games</td>
-                <td class="col-md-8">
-                    @games.Length
-                </td>
+                <td class="col-md-8">@games.Length</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Finished</td>
-                <td class="col-md-8">
-                    @((!Model.IsFinished.HasValue || (Model.IsFinished.HasValue && Model.IsFinished.Value == false)) ? "No" : "Yes")
-                </td>
+                <td class="col-md-8">@(Model.IsFinished == false ? "No" : "Yes")</td>
             </tr>
             <tr>
                 <td class="bold col-md-4">Public</td>
-                <td class="col-md-8">
-                    @((!Model.IsPublic.HasValue || (Model.IsPublic.HasValue && Model.IsPublic.Value == false)) ? "No" : "Yes")
-                </td>
+                <td class="col-md-8">@(Model.IsPublic == false ? "No" : "Yes")</td>
             </tr>
         </table>
     </div>
@@ -81,18 +67,15 @@
             @foreach (var player in players)
             {
                 int place = ChessSystem.Models.TournamentsHelper.GetPlayersPlace(Model, player);
-                int won = player.Won.HasValue ? player.Won.Value : 0;
-                int lost = player.Lost.HasValue ? player.Lost.Value : 0;
-                int drawn = player.Drawn.HasValue ? player.Drawn.Value : 0;
 
                 <tr>
                     <td>@Html.ActionLink(player.Tagname, "Player", "Players", new { id = player.Id }, null)</td>
                     <td>@($"{player.FirstName} {player.LastName}")</td>
                     <td>@(place != 0 ? place.ToString() : "-")</td>
-                    <td>@(won + lost + drawn)</td>
-                    <td>@won</td>
-                    <td>@lost</td>
-                    <td>@drawn</td>
+                    <td>@(player.Won + player.Lost + player.Drawn)</td>
+                    <td>@player.Won</td>
+                    <td>@player.Lost</td>
+                    <td>@player.Drawn</td>
                 </tr>
             }
         </tbody>
@@ -122,7 +105,6 @@
         <tbody>
             @foreach (var game in games)
             {
-                var isGameFinished = game.IsFinished.HasValue && game.IsFinished.Value == true;
                 var winnerExists = game.WinnerId.HasValue;
                 var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(game);
                 var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(game);
@@ -133,25 +115,18 @@
                     <td>@Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)</td>
                     <td>
                         @(
-                            isGameFinished ?
+                            game.IsFinished == true ?
                                 winnerExists ? winner.Tagname : "drawn"
                             : "-"
                         )
                     </td>
                     <td>@(game.Date.HasValue ? game.Date.Value.ToString() : "-")</td>
-                    <td>
-                        @(
-                            game.Duration.HasValue ?
-                                TimeSpan.FromSeconds(game.Duration.Value).ToString(@"hh\:mm\:ss")
-                            : "-"
-                        )
-                    </td>
-                    <td>@(game.Moves.HasValue ? game.Moves.Value : 0)</td>
-                    <td>@(isGameFinished ? "Yes" : "No")</td>
+                    <td>@TimeSpan.FromSeconds(game.Duration).ToString(@"hh\:mm\:ss")</td>
+                    <td>@game.Moves</td>
+                    <td>@(game.IsFinished == true ? "Yes" : "No")</td>
                     <td>@Html.ActionLink("Link", "Game", "Games", new { id = game.Id }, null)</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-

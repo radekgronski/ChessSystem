@@ -2,8 +2,30 @@
 
 @Html.Partial("_Navbar")
 
-<div class="col-md-10 col-md-offset-1">
-    <h1 class="header-margin">Tournaments</h1>
+<div class="col-md-10 col-md-offset-1 position-anchor">
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="header-margin">Tournaments</h1>
+        </div>
+            @if (Session["UserId"] != null)
+            {
+                <div class="col-md-3 text-right">
+                    @(Html.ActionLink
+                    (
+                        "Create new",
+                        "Add",
+                        "Tournaments",
+                        null,
+                        new
+                        {
+                            role = "button",
+                            @class = "btn btn-primary",
+                            style = "margin-top: 20px;"
+                        }
+                    ))
+                </div>
+            }
+    </div>
 
     <table
         class="table table-striped"
@@ -28,13 +50,7 @@
                     <td>@(tournament.Date.HasValue ? tournament.Date.Value.ToString() : "-")</td>
                     <td>@tournament.Place</td>
                     <td>@tournament.Users.Name</td>
-                    <td>
-                        @(
-                            (!tournament.IsFinished.HasValue || (tournament.IsFinished.HasValue && tournament.IsFinished.Value == false))
-                            ? "No"
-                            : "Yes"
-                        )
-                    </td>
+                    <td>@(tournament.IsFinished == false ? "No" : "Yes")</td>
                 </tr>
             }
         </tbody>

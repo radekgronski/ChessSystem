@@ -11,7 +11,9 @@ namespace ChessSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Tournaments
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,12 +24,21 @@ namespace ChessSystem.Models
         }
     
         public int Id { get; set; }
+
+        [Required]
         public int OrganizerId { get; set; }
+
+        [Required]
+        [DisplayName("Name *")]
         public string Name { get; set; }
+
         public Nullable<System.DateTime> Date { get; set; }
+
         public string Place { get; set; }
-        public Nullable<bool> IsPublic { get; set; }
-        public Nullable<bool> IsFinished { get; set; }
+
+        public bool IsPublic { get; set; }
+
+        public bool IsFinished { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Games> Games { get; set; }

@@ -322,6 +322,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Tournaments\Index.cshtml" />
     <Content Include="Views\Tournaments\Tournament.cshtml" />
+    <Content Include="Views\Tournaments\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

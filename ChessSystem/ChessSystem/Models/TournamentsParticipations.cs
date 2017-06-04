@@ -18,9 +18,9 @@ namespace ChessSystem.Models
         public int TournamentId { get; set; }
         public int PlayerId { get; set; }
         public Nullable<int> Place { get; set; }
-        public Nullable<int> Won { get; set; }
-        public Nullable<int> Lost { get; set; }
-        public Nullable<int> Drawn { get; set; }
+        public int Won { get; set; }
+        public int Lost { get; set; }
+        public int Drawn { get; set; }
     
         public virtual Players Players { get; set; }
         public virtual Tournaments Tournaments { get; set; }
