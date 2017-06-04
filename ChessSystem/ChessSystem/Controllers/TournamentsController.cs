@@ -48,6 +48,11 @@ namespace ChessSystem.Controllers
         {
             var tournament = db.Tournaments.Where(t => t.Id == id).First();
 
+            if (tournament == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
             if (tournament.IsPublic == false)
             {
                 if (Session["UserId"] == null)
@@ -93,6 +98,28 @@ namespace ChessSystem.Controllers
             }
 
             return RedirectToAction("Tournament", new { id = tournamentData.Id });
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            if (Session["UserId"] != null)
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var tournamentToRemove = db.Tournaments.Where(tournament => tournament.Id == id).First();
+
+                if (tournamentToRemove == null || tournamentToRemove.OrganizerId != userId)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                db.Tournaments.Remove(tournamentToRemove);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Tournaments");
+            }
+
+            return new HttpStatusCodeResult(403);
         }
     }
 }
