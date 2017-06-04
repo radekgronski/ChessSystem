@@ -21,8 +21,8 @@ namespace ChessSystem.Models
         public byte Piece { get; set; }
         public byte MoveFrom { get; set; }
         public byte MoveTo { get; set; }
-        public Nullable<int> Duration { get; set; }
-        public Nullable<byte> CapturedPiece { get; set; }
+        public int Duration { get; set; }
+        public byte CapturedPiece { get; set; }
     
         public virtual Games Games { get; set; }
         public virtual Players Players { get; set; }

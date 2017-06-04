@@ -27,10 +27,10 @@ namespace ChessSystem.Models
         public int Player2Id { get; set; }
         public Nullable<int> WinnerId { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> Duration { get; set; }
-        public Nullable<int> Moves { get; set; }
-        public Nullable<bool> IsPublic { get; set; }
-        public Nullable<bool> IsFinished { get; set; }
+        public int Duration { get; set; }
+        public int Moves { get; set; }
+        public bool IsPublic { get; set; }
+        public bool IsFinished { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual Players Players { get; set; }

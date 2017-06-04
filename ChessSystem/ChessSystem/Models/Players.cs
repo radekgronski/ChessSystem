@@ -28,11 +28,11 @@ namespace ChessSystem.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Tagname { get; set; }
-        public Nullable<int> Won { get; set; }
-        public Nullable<int> Lost { get; set; }
-        public Nullable<int> Drawn { get; set; }
-        public Nullable<int> Tournaments { get; set; }
-        public Nullable<int> StandaloneGames { get; set; }
+        public int Won { get; set; }
+        public int Lost { get; set; }
+        public int Drawn { get; set; }
+        public int Tournaments { get; set; }
+        public int StandaloneGames { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Games> Games { get; set; }
