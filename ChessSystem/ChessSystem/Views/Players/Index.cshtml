@@ -1,0 +1,42 @@
+﻿@model ChessSystem.Models.Players[]
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">Players</h1>
+
+    <table
+        class="table table-striped"
+        data-toggle="table"
+        data-sort-name="id"
+        data-sort-order="asc"
+    >
+        <thead>
+            <tr class="bold">
+                <th data-field="tag" data-sortable="true">Tag Name</th>
+                <th data-field="first" data-sortable="true">First Name</th>
+                <th data-field="last" data-sortable="true">Last Name</th>
+                <th data-field="won" data-sortable="true">Won</th>
+                <th data-field="lost" data-sortable="true">Lost</th>
+                <th data-field="drawn" data-sortable="true">Drawn</th>
+                <th data-field="tournaments" data-sortable="true">Tournaments</th>
+                <th data-field="standalone" data-sortable="true">Standalone Games</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var player in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(player.Tagname, "Player", "Players", new { id = player.Id }, null)</td>
+                    <td>@player.FirstName</td>
+                    <td>@player.LastName</td>              
+                    <td>@player.Won</td>
+                    <td>@player.Lost</td>
+                    <td>@player.Drawn</td>
+                    <td>@player.Tournaments</td>
+                    <td>@player.StandaloneGames</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

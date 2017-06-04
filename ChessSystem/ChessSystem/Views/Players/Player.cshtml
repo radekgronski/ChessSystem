@@ -1,0 +1,65 @@
+﻿@model ChessSystem.Models.Players
+
+@{
+    var games = Model.Games.Where(game => game.Player1Id == Model.Id || game.Player2Id == Model.Id).ToArray();
+}
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">@Model.Tagname</h1>
+    <div class="col-md-6 row">
+        <table class="table table-bordered">
+            <tr>
+                <td class="bold col-md-4">First name</td>
+                <td class="col-md-8">
+                    @Model.FirstName
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Second name</td>
+                <td class="col-md-8">
+                    @Model.LastName
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1 section-margin">
+    <h3 class="header-margin">Games</h3>
+    <table class="table table-striped"
+           data-toggle="table"
+           data-sort-name="date"
+           data-sort-order="desc">
+        <thead class="bold">
+            <tr>
+                <th data-field="Tournament" data-sortable="true">Tournament name</th>
+                <th data-field="Player 1" data-sortable="true">Player 1</th>
+                <th data-field="Player 2" data-sortable="true">Player 2</th>
+                <th data-field="Winner" data-sortable="true">Winner</th>
+                <th data-field="Date" data-sortable="true">Date</th>
+                <th data-field="Duration" data-sortable="true">Duration</th>
+                <th data-field="Moves" data-sortable="true">Moves</th>
+                <th data-field="Finished" data-sortable="true">Finished</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in games)
+            {
+                var isGameFinished = game.IsFinished.HasValue && game.IsFinished.Value == true;
+
+                <tr>
+                    <td>@game.TournamentId</td>
+                    <td>@game.Player1Id</td>
+                    <td>@game.Player2Id</td>
+                    <td>@(isGameFinished ? game.WinnerId : '-')</td>
+                    <td>@game.Date</td>
+                    <td>@game.Duration</td>
+                    <td>@game.Moves</td>
+                    <td>@(isGameFinished ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
