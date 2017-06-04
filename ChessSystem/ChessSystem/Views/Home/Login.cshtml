@@ -12,7 +12,7 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
                 
-                <div class="form-group login-form">
+                <div class="form-group form">
                     @Html.LabelFor(user => user.Login)
                     @Html.TextBoxFor(user => user.Login, new { @class = "form-control", required="required" })
                     @Html.ValidationMessageFor(user => user.Login)

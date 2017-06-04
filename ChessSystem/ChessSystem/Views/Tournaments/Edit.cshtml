@@ -1,0 +1,34 @@
+﻿@model ChessSystem.Models.Tournaments
+
+@Html.Partial("_Navbar")
+
+
+<div class="col-md-10 col-md-offset-1">
+    @using (Html.BeginForm("edit", "Tournaments", FormMethod.Post))
+    {
+        <fieldset>
+            <h3>Edit tournament</h3>
+            <div class="form-group form col-md-6">
+                @Html.LabelFor(tournament => tournament.Name)
+                @Html.TextBoxFor(tournament => tournament.Name, new { @class = "form-control", required = "required", value = Model.Name })
+                @Html.ValidationMessageFor(tournament => tournament.Name)
+
+                @Html.LabelFor(tournament => tournament.Date)
+                @Html.TextBoxFor(tournament => tournament.Date, new { type = "date", @class = "form-control", value = Model.Date })
+                @Html.ValidationMessageFor(tournament => tournament.Date)
+
+                @Html.LabelFor(tournament => tournament.Place)
+                @Html.TextBoxFor(tournament => tournament.Place, new { @class = "form-control", value = Model.Place })
+                @Html.ValidationMessageFor(tournament => tournament.Place)
+
+                @Html.LabelFor(tournament => tournament.IsPublic)
+                @Html.CheckBoxFor(tournament => tournament.IsPublic, new { @class = "checkbox form-checkbox", @checked = Model.IsPublic })
+
+                @Html.LabelFor(tournament => tournament.IsFinished)
+                @Html.CheckBoxFor(tournament => tournament.IsFinished, new { @class = "checkbox form-checkbox", @checked = Model.IsFinished })
+
+                <input type="submit" value="Save" class="btn btn-primary btn-submit" />
+            </div>
+        </fieldset>
+    }
+</div>

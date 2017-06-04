@@ -101,6 +101,42 @@ namespace ChessSystem.Controllers
         }
 
 
+        public ActionResult Edit(int id)
+        {
+            if (Session["UserId"] != null)
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var tournamentToEdit = db.Tournaments.Where(tournament => tournament.Id == id).First();
+
+                if (tournamentToEdit == null || tournamentToEdit.OrganizerId != userId)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                return View(tournamentToEdit);
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(Tournaments tournamentData)
+        {
+            var tournament = db.Tournaments.Where(t => t.Id == t.Id).First();
+
+            tournament.Name = tournamentData.Name;
+            tournament.Date = tournamentData.Date;
+            tournament.Place = tournamentData.Place;
+            tournament.IsFinished = tournamentData.IsFinished;
+            tournament.IsPublic = tournamentData.IsPublic;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Tournament", "Tournaments", new { id = tournamentData.Id });
+        }
+
+
         public ActionResult Delete(int id)
         {
             if (Session["UserId"] != null)

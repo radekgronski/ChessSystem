@@ -31,6 +31,10 @@ html, body
     margin-top: 40px;
 }
 
+.form, .form label {
+    margin-top: 20px;
+}
+
 .form-checkbox {
     width: 18px;
     height: 18px;
@@ -39,8 +43,4 @@ html, body
 
 .login-container {
     margin-top: 50px;
-}
-
-.login-form, .login-form label {
-    margin-top: 20px;
 }

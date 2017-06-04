@@ -7,13 +7,13 @@
     {
         <fieldset>
             <h3>Create a new tournament</h3>
-            <div class="form-group login-form">
+            <div class="form-group form col-md-6">
                 @Html.LabelFor(tournament => tournament.Name)
                 @Html.TextBoxFor(tournament => tournament.Name, new { @class = "form-control", required="required" })
                 @Html.ValidationMessageFor(tournament => tournament.Name)
 
                 @Html.LabelFor(tournament => tournament.Date)
-                @Html.TextBoxFor(tournament => tournament.Date, new { type = "datetime", @class = "form-control" })
+                @Html.TextBoxFor(tournament => tournament.Date, new { type = "date", @class = "form-control" })
                 @Html.ValidationMessageFor(tournament => tournament.Date)
 
                 @Html.LabelFor(tournament => tournament.Place)
