@@ -10,6 +10,7 @@ namespace ChessSystem.Controllers
     {
         private ChessSystemDbEntities db = new ChessSystemDbEntities();
 
+
         ~PlayersController()
         {
             try
@@ -22,6 +23,7 @@ namespace ChessSystem.Controllers
             }
         }
 
+
         public ActionResult Index()
         {
             // select players
@@ -30,11 +32,23 @@ namespace ChessSystem.Controllers
             return View(players);
         }
 
+
         public ActionResult Player(int id)
         {
             var player = db.Players.Find(id);
 
             return View(player);
+        }
+
+
+        public ActionResult Add()
+        {
+            if (Session["UserId"] == null)
+            {
+                return new HttpStatusCodeResult(403);
+            }
+
+            return View();
         }
     }
 }
