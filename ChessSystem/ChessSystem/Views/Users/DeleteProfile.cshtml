@@ -1,0 +1,17 @@
+﻿@model ChessSystem.Models.Users
+
+@Html.Partial("_Navbar")
+
+
+<div class="col-md-10 col-md-offset-1">
+    @using (Html.BeginForm("DeleteProfile", "Users", FormMethod.Post))
+    {
+        <fieldset>
+            <h3>Are you sure you want to delete your user?</h3>
+            <div class="form-group form col-md-6">
+                <input type="submit" value="Yes" class="btn btn-primary" />
+                @Html.ActionLink("No", "UserProfile", "Users", null, new { @class = "btn btn-primary", role = "button" })
+            </div>
+        </fieldset>
+    }
+</div>

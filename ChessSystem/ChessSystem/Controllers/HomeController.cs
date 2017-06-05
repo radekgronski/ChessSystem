@@ -20,10 +20,12 @@ namespace ChessSystem.Controllers
             }
         }
 
+
         public ActionResult Login()
         {
             return View();
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,6 +52,7 @@ namespace ChessSystem.Controllers
 
             return View(userData);
         }
+
 
         public ActionResult Logout()
         {

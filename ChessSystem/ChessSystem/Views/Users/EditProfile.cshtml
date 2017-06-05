@@ -1,0 +1,24 @@
+﻿@model ChessSystem.Models.Users
+
+@Html.Partial("_Navbar")
+
+
+<div class="col-md-10 col-md-offset-1">
+    @using (Html.BeginForm("EditProfile", "Users", FormMethod.Post))
+    {
+        <fieldset>
+            <h3>Edit your profile data</h3>
+            <div class="form-group form col-md-6">
+                @Html.LabelFor(user => user.Name)
+                @Html.TextBoxFor(user => user.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Name)
+
+                @Html.LabelFor(user => user.Password)
+                @Html.TextBoxFor(user => user.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Password)
+
+                <input type="submit" value="Save" class="btn btn-primary btn-submit" />
+            </div>
+        </fieldset>
+    }
+</div>

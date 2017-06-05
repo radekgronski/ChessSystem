@@ -1,0 +1,40 @@
+﻿@model ChessSystem.Models.Users
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">User profile</h1>
+    <div class="col-md-6 row">
+        <table class="table table-bordered">
+            <tr>
+                <td class="bold col-md-4">Name</td>
+                <td class="col-md-8">
+                    @Model.Name
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Login</td>
+                <td class="col-md-8">
+                    @Model.Login
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6 text-right">
+        @(Html.ActionLink(
+            "Edit",
+            "EditProfile",
+            "Users",
+            new { id = Model.Id },
+            new { role = "button", @class = "btn btn-primary" }
+        ))
+        @(Html.ActionLink
+        (
+            "Delete",
+            "DeleteProfile",
+            "Users",
+            new { id = Model.Id },
+            new { role = "button", @class = "btn btn-primary" }
+        ))
+    </div>
+</div>

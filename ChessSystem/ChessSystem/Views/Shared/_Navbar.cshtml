@@ -46,14 +46,14 @@
                 <ul class="dropdown-menu">
                     @if (isUserLoggedIn)
                     {
-                        <li>@Html.ActionLink("User account settings", "Index", "User")</li>
+                        <li>@Html.ActionLink("User account settings", "UserProfile", "Users")</li>
                         <li role="separator" class="divider"></li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                     }
                     else
                     {
                         <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                        <li>@Html.ActionLink("Create account", "CreateAccount", "User")</li>
+                        <li>@Html.ActionLink("Create account", "Register", "Users")</li>
                     }
                 </ul>
             </li>

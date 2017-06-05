@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\DatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -333,6 +334,10 @@
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Delete.cshtml" />
     <Content Include="Views\Tournaments\Delete.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
+    <Content Include="Views\Users\EditProfile.cshtml" />
+    <Content Include="Views\Users\DeleteProfile.cshtml" />
+    <Content Include="Views\Users\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
