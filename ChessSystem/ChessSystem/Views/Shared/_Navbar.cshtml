@@ -11,7 +11,11 @@
     else
     {
         urlSegment = Request.Url.Segments[1];
-        urlSegment = urlSegment.Remove(urlSegment.Length - 1);
+
+        if (urlSegment.Last() == '/')
+        {
+            urlSegment = urlSegment.Remove(urlSegment.Length - 1);
+        }
     }
 }
 

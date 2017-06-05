@@ -31,7 +31,7 @@ namespace ChessSystem.Models
         {
             using (ChessSystemDbEntities db = new ChessSystemDbEntities())
             {
-                return db.Players.Where(player => player.Id == playerId).First();
+                return db.Players.Find(playerId);
             }
         }
     }

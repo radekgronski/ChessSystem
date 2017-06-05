@@ -15,9 +15,7 @@ namespace ChessSystem.Models
                     participation => participation.TournamentId == tournament.Id
                 );
                 var players = participations.Select(
-                    participation => db.Players.Where(
-                        player => player.Id == participation.PlayerId
-                    ).First()
+                    participation => db.Players.Find(participation.PlayerId)
                 ).ToArray();
 
                 return players;

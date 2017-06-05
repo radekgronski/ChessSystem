@@ -1,7 +1,10 @@
 ﻿@Html.Partial("_Navbar")
 
-<h1>Home page</h1>
-@if (Session["Name"] != null)
-{
-    <h2>Welcome, @Session["Name"].ToString()</h2>
-}
+<div class="col-md-10 col-md-offset-1">
+    <h1>Home page</h1>
+    
+    @if (Session["Name"] != null)
+    {
+        <h3>Welcome, @Session["Name"].ToString()</h3>
+    }
+</div>

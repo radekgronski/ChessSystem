@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using ChessSystem.Models;
+using System.Data.Entity;
 
 
 namespace ChessSystem.Controllers
@@ -46,7 +47,7 @@ namespace ChessSystem.Controllers
 
         public ActionResult Tournament(int id)
         {
-            var tournament = db.Tournaments.Where(t => t.Id == id).First();
+            var tournament = db.Tournaments.Find(id);
 
             if (tournament == null)
             {
@@ -91,7 +92,7 @@ namespace ChessSystem.Controllers
                 int userId = int.Parse(Session["UserId"].ToString());
 
                 tournamentData.Id = userId;
-                tournamentData.Users = db.Users.Where(user => user.Id == userId).First();
+                tournamentData.Users = db.Users.Find(userId);
 
                 db.Tournaments.Add(tournamentData);
                 db.SaveChanges();
@@ -106,7 +107,7 @@ namespace ChessSystem.Controllers
             if (Session["UserId"] != null)
             {
                 int userId = int.Parse(Session["UserId"].ToString());
-                var tournamentToEdit = db.Tournaments.Where(tournament => tournament.Id == id).First();
+                var tournamentToEdit = db.Tournaments.Find(id);
 
                 if (tournamentToEdit == null || tournamentToEdit.OrganizerId != userId)
                 {
@@ -123,7 +124,7 @@ namespace ChessSystem.Controllers
         [HttpPost]
         public ActionResult Edit(Tournaments tournamentData)
         {
-            var tournament = db.Tournaments.Where(t => t.Id == t.Id).First();
+            var tournament = db.Tournaments.Find(tournamentData.Id);
 
             tournament.Name = tournamentData.Name;
             tournament.Date = tournamentData.Date;
@@ -131,6 +132,7 @@ namespace ChessSystem.Controllers
             tournament.IsFinished = tournamentData.IsFinished;
             tournament.IsPublic = tournamentData.IsPublic;
 
+            db.Entry(tournament).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("Tournament", "Tournaments", new { id = tournamentData.Id });
@@ -142,7 +144,7 @@ namespace ChessSystem.Controllers
             if (Session["UserId"] != null)
             {
                 int userId = int.Parse(Session["UserId"].ToString());
-                var tournamentToRemove = db.Tournaments.Where(tournament => tournament.Id == id).First();
+                var tournamentToRemove = db.Tournaments.Find(id);
 
                 if (tournamentToRemove == null || tournamentToRemove.OrganizerId != userId)
                 {
