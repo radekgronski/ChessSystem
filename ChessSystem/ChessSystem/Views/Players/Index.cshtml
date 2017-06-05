@@ -3,7 +3,31 @@
 @Html.Partial("_Navbar")
 
 <div class="col-md-10 col-md-offset-1">
-    <h1 class="header-margin">Players</h1>
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="header-margin">Players</h1>
+        </div>
+        @if (Session["UserId"] != null)
+            {
+            <div class="col-md-3 text-right">
+                @(Html.ActionLink
+                    (
+                        "Create new",
+                        "Add",
+                        "Players",
+                        null,
+                        new
+                        {
+                            role = "button",
+                            @class = "btn btn-primary",
+                            style = "margin-top: 20px;"
+                        }
+                    ))
+            </div>
+        }
+    </div>
+
+
 
     <table
         class="table table-striped"

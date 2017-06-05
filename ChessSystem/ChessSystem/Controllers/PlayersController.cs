@@ -57,6 +57,14 @@ namespace ChessSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool isTagnameAlreadyInUse = db.Players.Count(p => p.Tagname == playerData.Tagname) > 0;
+
+                if (isTagnameAlreadyInUse)
+                {
+                    ModelState.AddModelError("Tagname", "This tagname already exists.");
+                    return View(playerData);
+                }
+
                 Players player = db.Players.Add(playerData);
                 db.SaveChanges();
 

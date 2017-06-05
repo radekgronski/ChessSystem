@@ -329,6 +329,7 @@
     <Content Include="Views\Players\Player.cshtml" />
     <Content Include="Views\Errors\NotFound.cshtml" />
     <Content Include="Views\Errors\AccessDenied.cshtml" />
+    <Content Include="Views\Players\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

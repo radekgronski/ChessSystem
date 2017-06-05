@@ -47,17 +47,15 @@
         <tbody>
             @foreach (var game in games)
             {
-                var isGameFinished = game.IsFinished.HasValue && game.IsFinished.Value == true;
-
                 <tr>
                     <td>@game.TournamentId</td>
                     <td>@game.Player1Id</td>
                     <td>@game.Player2Id</td>
-                    <td>@(isGameFinished ? game.WinnerId : '-')</td>
+                    <td>@(game.IsFinished ? game.WinnerId : '-')</td>
                     <td>@game.Date</td>
                     <td>@game.Duration</td>
                     <td>@game.Moves</td>
-                    <td>@(isGameFinished ? "Yes" : "No")</td>
+                    <td>@(game.IsFinished ? "Yes" : "No")</td>
                 </tr>
             }
         </tbody>
