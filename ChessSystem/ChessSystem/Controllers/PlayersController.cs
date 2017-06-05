@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 using ChessSystem.Models;
 
@@ -37,6 +38,11 @@ namespace ChessSystem.Controllers
         {
             var player = db.Players.Find(id);
 
+            if (player == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
             return View(player);
         }
 
@@ -72,6 +78,79 @@ namespace ChessSystem.Controllers
             }
 
             return RedirectToAction("Add");
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            if (Session["UserId"] != null)
+            {
+                var playerToEdit = db.Players.Find(id);
+
+                if (playerToEdit == null)
+                {
+                    return new HttpStatusCodeResult(404);
+                }
+
+                return View(playerToEdit);
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(Players playerData)
+        {
+            var player = db.Players.Find(playerData.Id);
+
+            player.FirstName = playerData.FirstName;
+            player.LastName = playerData.LastName;
+
+            db.Entry(player).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Player", "Players", new { id = player.Id });
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            if (Session["UserId"] != null)
+            {
+                var playerToRemove = db.Players.Find(id);
+
+                if (playerToRemove == null)
+                {
+                    return new HttpStatusCodeResult(404);
+                }
+
+                return View(playerToRemove);
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(Players playerData)
+        {
+            if (Session["UserId"] != null)
+            {
+                var playerToRemove = db.Players.Find(playerData.Id);
+
+                if (playerToRemove == null)
+                {
+                    return new HttpStatusCodeResult(404);
+                }
+
+                db.Players.Remove(playerToRemove);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Players");
+            }
+
+            return new HttpStatusCodeResult(403);
         }
     }
 }

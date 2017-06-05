@@ -330,6 +330,9 @@
     <Content Include="Views\Errors\NotFound.cshtml" />
     <Content Include="Views\Errors\AccessDenied.cshtml" />
     <Content Include="Views\Players\Add.cshtml" />
+    <Content Include="Views\Players\Edit.cshtml" />
+    <Content Include="Views\Players\Delete.cshtml" />
+    <Content Include="Views\Tournaments\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

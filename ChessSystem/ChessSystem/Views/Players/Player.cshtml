@@ -1,6 +1,7 @@
 ﻿@model ChessSystem.Models.Players
 
 @{
+    var isUserLoggedIn = Session["UserId"] != null;
     var games = Model.Games.Where(game => game.Player1Id == Model.Id || game.Player2Id == Model.Id).ToArray();
 }
 
@@ -24,6 +25,26 @@
             </tr>
         </table>
     </div>
+    @if (isUserLoggedIn)
+    {
+        <div class="col-md-6 text-right">
+            @(Html.ActionLink(
+                "Edit",
+                "Edit",
+                "Players",
+                new { id = Model.Id },
+                new { role = "button", @class = "btn btn-primary" }
+            ))
+            @(Html.ActionLink
+            (
+                "Delete",
+                "Delete",
+                "Players",
+                new { id = Model.Id },
+                new { id = "delete-button", role = "button", @class = "btn btn-primary" }
+            ))
+        </div>
+    }
 </div>
 
 <div class="col-md-10 col-md-offset-1 section-margin">

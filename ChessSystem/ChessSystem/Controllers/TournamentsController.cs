@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 using ChessSystem.Models;
-using System.Data.Entity;
 
 
 namespace ChessSystem.Controllers
@@ -149,6 +149,26 @@ namespace ChessSystem.Controllers
                 var tournamentToRemove = db.Tournaments.Find(id);
 
                 if (tournamentToRemove == null || tournamentToRemove.OrganizerId != userId)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                return View(tournamentToRemove);
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(Tournaments tournamentData)
+        {
+            if (Session["UserId"] != null)
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var tournamentToRemove = db.Tournaments.Find(tournamentData.Id);
+
+                if (tournamentData == null || tournamentToRemove.OrganizerId != userId)
                 {
                     return new HttpStatusCodeResult(403);
                 }

@@ -1,0 +1,24 @@
+﻿@model ChessSystem.Models.Players
+
+@Html.Partial("_Navbar")
+
+
+<div class="col-md-10 col-md-offset-1">
+    @using (Html.BeginForm("Edit", "Players", FormMethod.Post))
+    {
+        <fieldset>
+            <h3>Edit tournament</h3>
+            <div class="form-group form col-md-6">
+                @Html.LabelFor(player => player.FirstName, "First name *")
+                @Html.TextBoxFor(player => player.FirstName, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(player => player.FirstName)
+
+                @Html.LabelFor(player => player.LastName, "Last name *")
+                @Html.TextBoxFor(player => player.LastName, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(player => player.LastName)
+
+                <input type="submit" value="Save" class="btn btn-primary btn-submit" />
+            </div>
+        </fieldset>
+    }
+</div>
