@@ -91,14 +91,16 @@ namespace ChessSystem.Controllers
             {
                 int userId = int.Parse(Session["UserId"].ToString());
 
-                tournamentData.Id = userId;
+                tournamentData.OrganizerId = userId;
                 tournamentData.Users = db.Users.Find(userId);
 
-                db.Tournaments.Add(tournamentData);
+                Tournaments tournament = db.Tournaments.Add(tournamentData);
                 db.SaveChanges();
+
+                return RedirectToAction("Tournament", new { id = tournament.Id });
             }
 
-            return RedirectToAction("Tournament", new { id = tournamentData.Id });
+            return RedirectToAction("Add");
         }
 
 

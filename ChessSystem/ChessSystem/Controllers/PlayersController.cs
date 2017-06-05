@@ -50,5 +50,20 @@ namespace ChessSystem.Controllers
 
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult Add(Players playerData)
+        {
+            if (ModelState.IsValid)
+            {
+                Players player = db.Players.Add(playerData);
+                db.SaveChanges();
+
+                return RedirectToAction("Player", new { id = player.Id });
+            }
+
+            return RedirectToAction("Add");
+        }
     }
 }
