@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Web;
+using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 
 namespace ChessSystem.Models
 {
@@ -32,6 +34,16 @@ namespace ChessSystem.Models
             using (ChessSystemDbEntities db = new ChessSystemDbEntities())
             {
                 return db.Players.Where(player => player.Id == playerId).First();
+            }
+        }
+
+        public static Games[] GetPlayersGames(int playerId)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                var games = db.Games.Where(game => game.Player1Id == playerId || game.Player2Id == playerId).ToArray();
+                
+                return games;
             }
         }
     }

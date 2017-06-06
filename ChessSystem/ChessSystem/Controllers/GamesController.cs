@@ -5,11 +5,11 @@ using ChessSystem.Models;
 
 namespace ChessSystem.Controllers
 {
-    public class PlayersController : Controller
+    public class GamesController : Controller
     {
         private ChessSystemDbEntities db = new ChessSystemDbEntities();
 
-        ~PlayersController()
+        ~GamesController()
         {
             try
             {
@@ -20,19 +20,20 @@ namespace ChessSystem.Controllers
                 base.Dispose();
             }
         }
-        
-        public ActionResult Index()
-        {
-            var players = db.Players.ToArray();
 
-            return View(players);
+        public ActionResult Game(int Id)
+        {
+            var game = db.Games.Where(t => t.Id == Id).First();
+
+            return View(game);
         }
 
-        public ActionResult Player(int id)
+
+        public ActionResult Index()
         {
-            var player = db.Players.Where(t => t.Id == id).First();
-           
-            return View(player);
+            var games = db.Games.ToArray();
+
+            return View(games);
         }
     }
 }

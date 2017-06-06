@@ -7,7 +7,6 @@
     var games = Model.Games.Where(game => game.TournamentId.HasValue && game.TournamentId.Value == Model.Id).ToArray();
 }
 
-
 @Html.Partial("_Navbar")
 
 <div class="col-md-10 col-md-offset-1">

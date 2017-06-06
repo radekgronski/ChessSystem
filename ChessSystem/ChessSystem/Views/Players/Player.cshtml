@@ -1,13 +1,14 @@
 ﻿@model ChessSystem.Models.Players
 
+
 @{
-    var games = Model.Games.Where(game => game.Player1Id == Model.Id || game.Player2Id == Model.Id).ToArray();
+    var games = ChessSystem.Models.GamesHelper.GetPlayersGames(Model.Id);
 }
 
 @Html.Partial("_Navbar")
 
 <div class="col-md-10 col-md-offset-1">
-    <h1 class="header-margin">@Model.Tagname</h1>
+    <h1 class="header-margin">@Model.Tagname (@Model.Id)</h1>
     <div class="col-md-6 row">
         <table class="table table-bordered">
             <tr>
@@ -47,15 +48,26 @@
         <tbody>
             @foreach (var game in games)
             {
-                var isGameFinished = game.IsFinished.HasValue && game.IsFinished.Value == true;
+                var isGameFinished = game.IsFinished;
+                var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(game);
+                var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(game);
+                var winner = ChessSystem.Models.GamesHelper.GetWinner(game);
 
                 <tr>
-                    <td>@game.TournamentId</td>
-                    <td>@game.Player1Id</td>
-                    <td>@game.Player2Id</td>
-                    <td>@(isGameFinished ? game.WinnerId : '-')</td>
-                    <td>@game.Date</td>
-                    <td>@game.Duration</td>
+                @if (game.TournamentId.HasValue)
+                {
+                    <td>@Html.ActionLink(ChessSystem.Models.TournamentNameHelper.GetTournamentName(game.TournamentId.Value).Name, "Tournament", "Tournaments", new { id = game.TournamentId }, null)</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+
+                    <td>@Html.ActionLink(player1.Tagname, "Player", "Players", new { id = player1.Id }, null)</td>
+                    <td>@Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)</td>
+                    <td>@Html.ActionLink(winner.Tagname, "Player", "Players", new { id = winner.Id }, null)</td>
+                    <td>@(game.Date.HasValue ? game.Date.Value.ToString() : "-")</td>
+                    <td>@TimeSpan.FromSeconds(game.Duration).ToString(@"hh\:mm\:ss")</td>
                     <td>@game.Moves</td>
                     <td>@(isGameFinished ? "Yes" : "No")</td>
                 </tr>
