@@ -5,18 +5,18 @@
     var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(Model);
     var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(Model);
     var winner = ChessSystem.Models.GamesHelper.GetWinner(Model);
-    var moves = ChessSystem.Models.MovesHelper.GamesMoves(Model.Id);
+    var moves = ChessSystem.Models.MovesHelper.GetMoves(Model);
 }
 
 @Html.Partial("_Navbar")
 
 <div class="col-md-10 col-md-offset-1">
-    <h1 class="header-margin">Game</h1>
-    <h2 class="header-margin">
+    <h1>Game</h1>
+    <h3 class="header-margin">
         @Html.ActionLink(player1.Tagname, "Player", "Players", new { id = player1.Id }, null) 
         vs 
         @Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)
-    </h2>
+    </h3>
 
     <div class="col-md-6 row">
         <table class="table table-bordered">

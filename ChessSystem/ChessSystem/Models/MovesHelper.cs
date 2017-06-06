@@ -7,11 +7,12 @@ namespace ChessSystem.Models
 {
     public class MovesHelper
     {
-        public static Moves[] GamesMoves(int gameId)
+        public static Moves[] GetMoves(Games game)
         {
             using (ChessSystemDbEntities db = new ChessSystemDbEntities())
             {
-                var moves = db.Moves.Where(t => t.GameId == gameId).ToArray();
+                var moves = db.Moves.Where(move => move.GameId == game.Id).ToArray();
+
                 return moves;
             }
         }
