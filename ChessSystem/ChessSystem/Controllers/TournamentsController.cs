@@ -27,16 +27,15 @@ namespace ChessSystem.Controllers
 
         public ActionResult Index()
         {
-           
             // select public tournaments
-            var tournaments = db.Tournaments.Where(tournament => tournament.IsPublic == true).ToList();
+            var tournaments = db.Tournaments.Where(tournament => tournament.IsPublic).ToList();
 
             // add also logged user's non-public tournaments
             if (Session["UserId"] != null)
             {
                 int userId = int.Parse(Session["UserId"].ToString());
                 var usersTournaments = db.Tournaments.Where(
-                    tournament => tournament.OrganizerId == userId && tournament.IsPublic == false
+                    tournament => tournament.OrganizerId == userId && !tournament.IsPublic
                 ).ToArray();
 
                 tournaments.AddRange(usersTournaments);
@@ -55,7 +54,7 @@ namespace ChessSystem.Controllers
                 return new HttpStatusCodeResult(404);
             }
 
-            if (tournament.IsPublic == false)
+            if (!tournament.IsPublic)
             {
                 if (Session["UserId"] == null)
                 {
