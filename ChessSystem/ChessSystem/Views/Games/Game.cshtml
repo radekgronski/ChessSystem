@@ -1,0 +1,94 @@
+﻿@model ChessSystem.Models.Games
+
+@{ 
+    var winnerExists = Model.WinnerId.HasValue;
+    var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(Model);
+    var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(Model);
+    var winner = ChessSystem.Models.GamesHelper.GetWinner(Model);
+    var moves = ChessSystem.Models.MovesHelper.GamesMoves(Model.Id);
+}
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">Game</h1>
+    <h2 class="header-margin">
+        @Html.ActionLink(player1.Tagname, "Player", "Players", new { id = player1.Id }, null) 
+        vs 
+        @Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)
+    </h2>
+
+    <div class="col-md-6 row">
+        <table class="table table-bordered">
+            <tr>
+                <td class="bold col-md-4">Winner</td>
+                <td class="col-md-8">
+                    @(winnerExists ? winner.Tagname : "-")
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Duration</td>
+                <td class="col-md-8">
+                    @TimeSpan.FromSeconds(Model.Duration).ToString(@"hh\:mm\:ss")
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Date</td>
+                <td class="col-md-8">
+                    @Model.Date.ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Moves</td>
+                <td class="col-md-8">
+                    @Model.Moves
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Is finished</td>
+                <td class="col-md-8">
+                    @(Model.IsFinished ? "Yes" : "No")
+                </td>
+            </tr>
+            <tr>
+                <td class="bold col-md-4">Is public</td>
+                <td class="col-md-8">
+                    @(Model.IsPublic ? "Yes" : "No")
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+ <div class="col-md-10 col-md-offset-1 section-margin">
+    <h3 class="header-margin">Moves</h3>
+    <table class="table table-striped"
+        data-toggle="table"
+        data-sort-name="date"
+        data-sort-order="desc"
+    >
+        <thead class="bold">
+            <tr>
+                <th>Number</th>
+                <th>Piece</th>
+                <th>Moved From</th>
+                <th>Moved To</th>
+                <th>Duration</th>
+                <th>Captured Piece</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var move in moves)
+            {
+                <tr>
+                    <td>@move.Number</td>
+                    <td>@move.Piece</td>
+                    <td>@move.MoveFrom</td>
+                    <td>@move.MoveTo</td>
+                    <td>@TimeSpan.FromSeconds(move.Duration).ToString(@"hh\:mm\:ss")</td>
+                    <td>@move.CapturedPiece</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

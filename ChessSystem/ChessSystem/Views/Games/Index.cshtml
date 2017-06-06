@@ -1,0 +1,62 @@
+﻿@model ChessSystem.Models.Games[]
+
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="header-margin">Games</h1>
+
+    <table class="table table-striped"
+           data-toggle="table"
+           data-sort-name="date"
+           data-sort-order="asc">
+        <thead>
+            <tr class="bold">
+                <th data-field="organizer" data-sortable="true">Organizer</th>
+                <th data-field="tournament" data-sortable="true">Tournament</th>
+                <th data-field="player1" data-sortable="true">Player1</th>
+                <th data-field="player2" data-sortable="true">Player2</th>
+                <th data-field="winner" data-sortable="true">Winner</th>
+                <th data-field="date" data-sortable="true">Date</th>
+                <th data-field="duration" data-sortable="true">Duration</th>
+                <th data-field="moves" data-sortable="true">Moves</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+                var winnerExists = game.WinnerId.HasValue;
+                var player1 = ChessSystem.Models.GamesHelper.GetPlayer1(game);
+                var player2 = ChessSystem.Models.GamesHelper.GetPlayer2(game);
+                var winner = ChessSystem.Models.GamesHelper.GetWinner(game);
+                var organizer = ChessSystem.Models.GamesHelper.GetOrganizer(game);
+                var tournament = ChessSystem.Models.GamesHelper.GetTournament(game);
+
+                <tr>
+                    <td>@(game.OrganizerId.HasValue ? organizer.Name : "-")</td>
+                    <td>
+                        @(
+                            game.TournamentId.HasValue
+                            ? Html.ActionLink(tournament.Name, "Tournament", "Tournaments", new { id = tournament.Id }, null)
+                            : null
+                        )
+                    </td>
+                    <td>@Html.ActionLink(player1.Tagname, "Player", "Players", new { id = player1.Id }, null)</td>
+                    <td>@Html.ActionLink(player2.Tagname, "Player", "Players", new { id = player2.Id }, null)</td>
+                    <td>
+                        @(
+                            game.IsFinished == true ?
+                                winnerExists ? winner.Tagname : "drawn"
+                            : "-"
+                        )
+                    </td>
+                    <td>@game.Date.ToString()</td>
+                    <td>@TimeSpan.FromSeconds(game.Duration).ToString(@"hh\:mm\:ss")</td>
+                    <td>@game.Moves</td>
+                    <td>@Html.ActionLink("Link", "Game", "Games", new { id = game.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

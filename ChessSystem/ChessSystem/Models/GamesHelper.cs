@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Web;
+using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 
 namespace ChessSystem.Models
 {
@@ -32,6 +34,44 @@ namespace ChessSystem.Models
             using (ChessSystemDbEntities db = new ChessSystemDbEntities())
             {
                 return db.Players.Find(playerId);
+            }
+        }
+
+        public static Games[] GetPlayersGames(int playerId)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                var games = db.Games.Where(game => game.Player1Id == playerId || game.Player2Id == playerId).ToArray();
+                
+                return games;
+            }
+        }
+
+        public static Tournaments GetTournament(Games game)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                if (game.TournamentId.HasValue)
+                {
+                    var tournament = db.Tournaments.Find(game.TournamentId.Value);
+                    return tournament;
+                }
+
+                return null;
+            }
+        }
+
+        public static Users GetOrganizer(Games game)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                if (game.OrganizerId.HasValue)
+                {
+                    var organizer = db.Users.Find(game.OrganizerId.Value);
+                    return organizer;
+                }
+
+                return null;
             }
         }
     }

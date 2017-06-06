@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
@@ -229,6 +230,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ParticipationsHelper.cs" />
+    <Compile Include="Models\MovesHelper.cs" />
     <Compile Include="Models\Players.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -340,9 +342,15 @@
     <Content Include="Views\Users\DeleteProfile.cshtml" />
     <Content Include="Views\Users\Register.cshtml" />
     <Content Include="Views\Tournaments\AddParticipation.cshtml" />
+    <Content Include="Views\Games\Index.cshtml" />
+    <Content Include="Views\Games\Game.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MovesHelper\" />
+    <Folder Include="Views\PlayersHelper\" />
+    <Folder Include="Views\TournamentName\" />
+    <Folder Include="Views\UsersHelper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

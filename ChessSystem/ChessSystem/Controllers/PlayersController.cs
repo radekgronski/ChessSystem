@@ -27,7 +27,6 @@ namespace ChessSystem.Controllers
 
         public ActionResult Index()
         {
-            // select players
             var players = db.Players.ToArray();
 
             return View(players);

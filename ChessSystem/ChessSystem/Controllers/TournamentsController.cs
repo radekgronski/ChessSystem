@@ -27,6 +27,7 @@ namespace ChessSystem.Controllers
 
         public ActionResult Index()
         {
+           
             // select public tournaments
             var tournaments = db.Tournaments.Where(tournament => tournament.IsPublic == true).ToList();
 
