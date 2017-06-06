@@ -3,6 +3,7 @@
 @{
     var isUserLoggedIn = Session["UserId"] != null;
     var userId = isUserLoggedIn ? int.Parse(Session["UserId"].ToString()) : 0;
+    var isOwner = isUserLoggedIn && userId == Model.OrganizerId;
     var players = ChessSystem.Models.TournamentsHelper.GetTournamentPlayers(Model);
     var games = Model.Games.Where(game => game.TournamentId.HasValue && game.TournamentId.Value == Model.Id).ToArray();
 }
@@ -44,7 +45,7 @@
             </tr>
         </table>
     </div>
-    @if (isUserLoggedIn && userId == Model.OrganizerId)
+    @if (isOwner)
     {
         <div class="col-md-6 text-right">
             @(Html.ActionLink(
@@ -67,7 +68,33 @@
 </div>
 
 <div class="col-md-10 col-md-offset-1 section-margin">
-    <h3 class="header-margin">Players</h3>
+    <div class="row">
+        <div class="col-md-9">
+            <h3 class="header-margin">Players</h3>
+        </div>
+        @if (isOwner && !Model.IsFinished)
+        {
+            <div class="col-md-3 text-right">
+                @(Html.ActionLink
+            (
+                "Add player",
+                "AddParticipation",
+                "Tournaments",
+                new
+                {
+                    id = Model.Id
+                },
+                new
+                {
+                    role = "button",
+                    @class = "btn btn-primary",
+                    style = "margin-top: 20px;"
+                }
+            ))
+            </div>
+        }
+    </div>
+    
     <table
         class="table table-striped"
         data-toggle="table"
@@ -83,12 +110,18 @@
                 <th data-field="won" data-sortable="true">Won</th>
                 <th data-field="lost" data-sortable="true">Lost</th>
                 <th data-field="drawn" data-sortable="true">Drawn</th>
+                @if (isOwner)
+                {
+                    <th>Edit</th>
+                    <th>Delete</th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var player in players)
             {
                 int place = ChessSystem.Models.TournamentsHelper.GetPlayersPlace(Model, player);
+                var participation = ChessSystem.Models.ParticipationsHelper.GetParticipation(Model.Id, player.Id);
 
                 <tr>
                     <td>@Html.ActionLink(player.Tagname, "Player", "Players", new { id = player.Id }, null)</td>
@@ -98,6 +131,29 @@
                     <td>@player.Won</td>
                     <td>@player.Lost</td>
                     <td>@player.Drawn</td>
+                    @if (isOwner)
+                    {
+                        <td>
+                            @(Html.ActionLink
+                            (
+                                "Edit",
+                                "EditParticipation",
+                                "Tournaments",
+                                new { id = participation.Id },
+                                null
+                            ))
+                        </td>
+                        <td>
+                            @(Html.ActionLink
+                            (
+                                "Delete",
+                                "DeleteParticipation",
+                                "Tournaments",
+                                new { id = participation.Id },
+                                null
+                            ))
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

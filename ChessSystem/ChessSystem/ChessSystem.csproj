@@ -228,6 +228,7 @@
     <Compile Include="Models\Moves.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParticipationsHelper.cs" />
     <Compile Include="Models\Players.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>

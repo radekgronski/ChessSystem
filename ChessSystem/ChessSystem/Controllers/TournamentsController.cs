@@ -190,7 +190,7 @@ namespace ChessSystem.Controllers
                 int userId = int.Parse(Session["UserId"].ToString());
                 var tournament = db.Tournaments.Find(id);
 
-                if (tournament == null || tournament.OrganizerId != userId)
+                if (tournament == null || tournament.OrganizerId != userId || tournament.IsFinished)
                 {
                     return new HttpStatusCodeResult(403);
                 }
@@ -217,7 +217,7 @@ namespace ChessSystem.Controllers
                 var tournament = db.Tournaments.Find(participationData.TournamentId);
                 var player = db.Players.Find(participationData.PlayerId);
 
-                if (tournament == null || tournament.OrganizerId != userId || player == null)
+                if (tournament == null || tournament.OrganizerId != userId || tournament.IsFinished || player == null)
                 {
                     return new HttpStatusCodeResult(403);
                 }
