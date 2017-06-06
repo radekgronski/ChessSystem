@@ -181,5 +181,60 @@ namespace ChessSystem.Controllers
 
             return new HttpStatusCodeResult(403);
         }
+
+
+        public ActionResult AddParticipation(int id)
+        {
+            if (Session["UserId"] != null)
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var tournament = db.Tournaments.Find(id);
+
+                if (tournament == null || tournament.OrganizerId != userId)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                var participation = new TournamentsParticipations()
+                {
+                    TournamentId = id,
+                    Tournaments = tournament
+                };
+
+                return View(participation);
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddParticipation(TournamentsParticipations participationData)
+        {
+            if (Session["UserId"] != null)
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var tournament = db.Tournaments.Find(participationData.TournamentId);
+                var player = db.Players.Find(participationData.PlayerId);
+
+                if (tournament == null || tournament.OrganizerId != userId || player == null)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                var participationToInsert = new TournamentsParticipations()
+                {
+                    TournamentId = participationData.TournamentId,
+                    PlayerId = participationData.PlayerId
+                };
+
+                var participation = db.TournamentsParticipations.Add(participationToInsert);
+                db.SaveChanges();
+
+                return RedirectToAction("Tournament", "Tournaments", new { id = participation.TournamentId });
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
     }
 }

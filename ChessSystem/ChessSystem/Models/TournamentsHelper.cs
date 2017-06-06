@@ -38,5 +38,17 @@ namespace ChessSystem.Models
                 return playerParticipation.Place.Value;
             }
         }
+
+        public static Players[] GetTournamentPossiblePlayers(int tournamentId)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                var currentParticipations = db.TournamentsParticipations.Where(participation => participation.TournamentId == tournamentId);
+                var currentPlayersIds = currentParticipations.Select(participation => participation.PlayerId);
+                var possiblePlayers = db.Players.Where(player => !currentPlayersIds.Contains(player.Id));
+
+                return possiblePlayers.ToArray();
+            }
+        }
     }
 }
