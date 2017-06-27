@@ -344,13 +344,10 @@
     <Content Include="Views\Tournaments\AddParticipation.cshtml" />
     <Content Include="Views\Games\Index.cshtml" />
     <Content Include="Views\Games\Game.cshtml" />
+    <Content Include="Views\Games\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MovesHelper\" />
-    <Folder Include="Views\PlayersHelper\" />
-    <Folder Include="Views\TournamentName\" />
-    <Folder Include="Views\UsersHelper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

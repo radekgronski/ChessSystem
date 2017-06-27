@@ -105,7 +105,7 @@
                 <th data-field="tagname" data-sortable="true">Tagname</th>
                 <th data-field="name" data-sortable="true">Name</th>
                 <th data-field="place" data-sortable="true">Place</th>
-                <th data-field="games" data-sortable="true">Games</th>
+                <th data-field="games" data-sortable="true">Finished games</th>
                 <th data-field="won" data-sortable="true">Won</th>
                 <th data-field="lost" data-sortable="true">Lost</th>
                 <th data-field="drawn" data-sortable="true">Drawn</th>
@@ -160,7 +160,33 @@
 </div>
 
 <div class="col-md-10 col-md-offset-1 section-margin section-margin-bottom">
-    <h3 class="header-margin">Games</h3>
+    <div class="row">
+        <div class="col-md-9">
+            <h3 class="header-margin">Games</h3>
+        </div>
+        @if (isOwner && !Model.IsFinished)
+        {
+            <div class="col-md-3 text-right">
+                @(Html.ActionLink
+            (
+                "Add game",
+                "Add",
+                "Games",
+                new
+                {
+                    id = Model.Id
+                },
+                new
+                {
+                    role = "button",
+                    @class = "btn btn-primary",
+                    style = "margin-top: 20px;"
+                }
+            ))
+            </div>
+        }
+    </div>
+
     <table
         class="table table-striped"
         data-toggle="table"

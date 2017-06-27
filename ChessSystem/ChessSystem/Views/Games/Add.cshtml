@@ -1,0 +1,75 @@
+﻿@model ChessSystem.Models.Games
+
+@{
+    ChessSystem.Models.Players[] possiblePlayers;
+    var playersList = new List<SelectListItem>();
+    ChessSystem.Models.Tournaments tournament = null;
+
+    if (Model != null && Model.TournamentId.HasValue)
+    {
+        possiblePlayers = ChessSystem.Models.TournamentsHelper.GetTournamentPlayers(Model.TournamentId.Value);
+        tournament = ChessSystem.Models.GamesHelper.GetTournament(Model.TournamentId.Value);
+    }
+    else
+    {
+        possiblePlayers = ChessSystem.Models.GamesHelper.GetAllPlayers();
+    }
+
+
+    foreach (var player in possiblePlayers)
+    {
+        var item = new SelectListItem()
+        {
+            Text = $"{player.FirstName} {player.LastName} ({player.Tagname})",
+            Value = player.Id.ToString()
+        };
+
+        playersList.Add(item);
+    }
+}
+
+
+@Html.Partial("_Navbar")
+
+<div class="col-md-10 col-md-offset-1">
+    @using (Html.BeginForm("Add", "Games", FormMethod.Post))
+    {
+        <fieldset>
+            <h3>Create a new game @(tournament != null ? $"for tournament {tournament.Name}" : "")</h3>
+            <div class="form-group form col-md-6">
+                @if (Model != null && Model.TournamentId.HasValue)
+                {
+                    @Html.HiddenFor(game => game.TournamentId, new { value = Model.TournamentId.Value })
+                }
+
+                @Html.LabelFor(game => game.Player1Id, "Player 1 *")
+                @Html.DropDownListFor(
+                    game => game.Player1Id,
+                    playersList,
+                    new { @class = "form-control", required = "required" }
+                )
+                @Html.ValidationMessageFor(game => game.Player1Id)
+
+                @Html.LabelFor(game => game.Player2Id, "Palyer 2 *")
+                @Html.DropDownListFor(
+                    game => game.Player2Id,
+                    playersList,
+                    new { @class = "form-control", required = "required" }
+                )
+                @Html.ValidationMessageFor(game => game.Player2Id)
+
+                @Html.LabelFor(game => game.Date)
+                @Html.TextBoxFor(game => game.Date, new { type = "date", @class = "form-control" })
+                @Html.ValidationMessageFor(game => game.Date)
+
+                @if (Model == null || !Model.TournamentId.HasValue)
+                {
+                    @Html.LabelFor(game => game.IsPublic)
+                    Html.CheckBoxFor(game => game.IsPublic, new { @class = "checkbox form-checkbox" });
+                }
+
+                <input type="submit" value="Create" class="btn btn-primary btn-submit" />
+            </div>
+        </fieldset>
+    }
+</div>

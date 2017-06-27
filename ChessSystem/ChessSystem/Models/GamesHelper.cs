@@ -61,6 +61,22 @@ namespace ChessSystem.Models
             }
         }
 
+        public static Tournaments GetTournament(int tournamentId)
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                return db.Tournaments.Find(tournamentId);
+            }
+        }
+
+        public static Players[] GetAllPlayers()
+        {
+            using (ChessSystemDbEntities db = new ChessSystemDbEntities())
+            {
+                return db.Players.ToArray();
+            }
+        }
+
         public static Users GetOrganizer(Games game)
         {
             using (ChessSystemDbEntities db = new ChessSystemDbEntities())

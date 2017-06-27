@@ -94,5 +94,80 @@ namespace ChessSystem.Controllers
 
             return View(games.ToArray());
         }
+
+        
+        public ActionResult Add(int? id)
+        {
+            if (Session["UserId"] != null)
+            {
+                if (id != null)
+                {
+                    int userId = int.Parse(Session["UserId"].ToString());
+                    var tournament = db.Tournaments.Find(id);
+
+                    if (tournament == null || tournament.OrganizerId != userId)
+                    {
+                        return new HttpStatusCodeResult(403);
+                    }
+
+                    Games game = new Games() { TournamentId = id, OrganizerId = null };
+
+                    return View(game);
+                }
+
+                return View();
+            }
+
+            return new HttpStatusCodeResult(403);
+        }
+
+
+        [HttpPost]
+        public ActionResult Add(Games gameData)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!gameData.TournamentId.HasValue)
+                {
+                    int userId = int.Parse(Session["UserId"].ToString());
+                    gameData.OrganizerId = userId;
+                }
+
+                if (gameData.Player1Id == gameData.Player2Id)
+                {
+                    ModelState.AddModelError("Player1Id", "You must choose two different players.");
+                    ModelState.AddModelError("Player2Id", "You must choose two different players.");
+
+                    return View(gameData);
+                }
+
+                Games gameToAdd = new Games()
+                {
+                    TournamentId = gameData.TournamentId,
+                    OrganizerId = gameData.OrganizerId,
+                    Player1Id = gameData.Player1Id,
+                    Player2Id = gameData.Player2Id,
+                    Date = gameData.Date,
+                    IsPublic = gameData.IsPublic,
+                    WinnerId = null,
+                    Moves = 0,
+                    Duration = 0,
+                    IsFinished = false
+                };
+
+                if (gameToAdd.TournamentId.HasValue)
+                {
+                    var tournament = db.Tournaments.Find(gameToAdd.TournamentId.Value);
+                    gameToAdd.IsPublic = tournament.IsPublic;
+                }
+
+                Games game = db.Games.Add(gameToAdd);
+                db.SaveChanges();
+
+                return RedirectToAction("Game", "Games", new { id = game.Id });
+            }
+
+            return View(gameData);
+        }
     }
 }
